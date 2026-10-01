@@ -1,7 +1,10 @@
+using TMPro;
 using UnityEngine;
 
-public class Indicateurs : MonoBehaviour
+public class UIController : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI Charge;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -11,6 +14,6 @@ public class Indicateurs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+      
     }
 }

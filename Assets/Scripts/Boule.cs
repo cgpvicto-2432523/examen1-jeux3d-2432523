@@ -28,7 +28,18 @@ public class Boule : MonoBehaviour
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.useGravity = false;
+        if(ControleurJeu.Instance!=null && ControleurJeu.Instance.Controles != null)
+        {
+            PlayerInput controles = ControleurJeu.Instance.Controles;
+            controles.actions.FindAction("Diriger").performed += CommencerDirection;
+            controles.actions.FindAction("Diriger").canceled += ArreterDirection;
+            controles.actions.FindAction("Commencer").performed += CommencerJeu;
+
+        }
+
     }
+
 
     private void OnDestroy()
     {
@@ -42,6 +53,8 @@ public class Boule : MonoBehaviour
 
         controles.actions.FindAction("Diriger").performed -= CommencerDirection;
         controles.actions.FindAction("Diriger").canceled -= ArreterDirection;
+        controles.actions.FindAction("Commencer").performed -= CommencerJeu;
+
     }
 
     private void Update()
@@ -57,6 +70,10 @@ public class Boule : MonoBehaviour
         Diriger();
     }
 
+    private void CommencerJeu(InputAction.CallbackContext contexte)
+    {
+        rigidbody.useGravity = true;
+    }
     private void CommencerDirection(InputAction.CallbackContext contexte)
     {
         forceAppliquee += contexte.ReadValue<float>() * forceDeplacement * Vector3.right;
